@@ -15,6 +15,22 @@ const controls = Object.fromEntries(
 );
 const defaults = { screen: 'main', theme: '', resolution: '1280x720' };
 const shortThemeNames = { WorldPartyArgon: 'WorldParty Argon', WorldPartyNeon: 'WorldParty Neon' };
+// Original creator credits from UltraStar-CE/Themes CREDITS.md.
+const themeAuthors = {
+  Candy: 'Tamaki',
+  Clarity: 'Daniel Gruss',
+  Classic: 'MezzoX',
+  Deluxe: 'UltraStar Deluxe Team',
+  Karaoke: '3Ryuusei3',
+  Midnight: 'aveiver',
+  Modern: 'UltraStar Deluxe Team',
+  Neon: 'UltraStar Deluxe Team',
+  Temptation: 'Charis',
+  Verdure: 'MezzoX',
+  WorldPartyArgon: 'Daniel20',
+  WorldPartyNeon: 'Daniel20',
+};
+const skinAuthors = { Modern: { Halloween: 'USCE community' } };
 const pageSize = 24;
 let page = 1;
 
@@ -111,6 +127,8 @@ function card(row) {
     element('p', showSkins ? themeName(row.theme) : screens[row.screen] + ' · ' + row.latest.skin),
   );
   if (!showSkins) article.append(element('p', resolutionName(row.resolution)));
+  const author = skinAuthors[row.theme]?.[row.latest.skin] ?? themeAuthors[row.theme];
+  if (author) article.append(element('p', 'by ' + author, 'theme-card-author'));
   return article;
 }
 

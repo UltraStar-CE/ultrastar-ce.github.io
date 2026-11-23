@@ -89,6 +89,8 @@
   gap: 1rem;
 }
 .theme-card {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   padding: .75rem;
   border: 1px solid var(--gallery-line);
@@ -104,6 +106,12 @@
 .theme-card p {
   margin: 0;
   font-size: .88rem;
+}
+.theme-card .theme-card-author {
+  margin-block-start: auto;
+  padding-block-start: .5rem;
+  text-align: end;
+  overflow-wrap: anywhere;
 }
 .theme-card figure {
   min-width: 0;
