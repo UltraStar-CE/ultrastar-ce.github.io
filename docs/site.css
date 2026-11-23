@@ -41,6 +41,13 @@ h2 { font-size: clamp(1.3rem, 2vw, 1.75rem); line-height: 1.2; letter-spacing: -
 .game-image { padding: .48rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--surface); }
 .game-image img { display: block; width: 100%; height: auto; border-radius: .36rem; }
 .game-image figcaption { color: var(--muted); font-size: .87rem; padding: .52rem .36rem .2rem; }
+.feature-section { border-top: 1px solid var(--line); padding-block: 1.65rem 2rem; }
+.feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin-top: 1.4rem; }
+.feature { display: flex; flex-direction: column; }
+.feature img { display: block; width: 100%; height: auto; margin-top: .75rem; border: 1px solid var(--line); border-radius: .42rem; }
+.feature h3, .feature-performance h3 { margin: .8rem 0 .22rem; font-size: 1.16rem; }
+.feature p, .feature-performance p { color: var(--muted); }
+.feature-performance { margin-top: 1.5rem; border-top: 1px solid var(--line); padding-top: .5rem; }
 .section-rule { border-top: 1px solid var(--line); padding: 1.65rem 0 1.8rem; display: grid; grid-template-columns: minmax(10rem, .56fr) minmax(0, 1.44fr); gap: 1rem 2rem; }
 .prose { max-width: 45rem; color: var(--muted); }
 .prose p + p { margin-top: .73rem; }
@@ -51,7 +58,7 @@ h2 { font-size: clamp(1.3rem, 2vw, 1.75rem); line-height: 1.2; letter-spacing: -
 .footer-inner div { display: flex; flex-wrap: wrap; gap: 1.2rem; }
 @media (max-width: 48rem) {
   .container { width: min(100% - 2rem, 76rem); }
-  .hero, .section-rule { grid-template-columns: 1fr; }
+  .hero, .section-rule, .feature-grid { grid-template-columns: 1fr; }
   .hero { padding-block: 2.9rem; }
   .page-intro { padding-top: 2.4rem; }
 }

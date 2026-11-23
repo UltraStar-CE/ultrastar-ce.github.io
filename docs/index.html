@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Free, open-source karaoke for Windows, macOS and Linux. Explore themes or get the latest release on GitHub.">
+  <meta name="description" content="Free, open-source karaoke for Windows, macOS and Linux. Sing with phone microphones, play continuously, and explore USCE themes.">
   <meta name="theme-color" content="#101d2e">
   <link rel="icon" href="./assets/usce-mark.png">
   <link rel="stylesheet" href="./site.css">
@@ -28,6 +28,35 @@
         <img src="./assets/singing.webp" alt="Three players follow colored pitch notes and lyrics in USCE" width="1280" height="720" fetchpriority="high">
         <figcaption>Singing together in USCE</figcaption>
       </figure>
+    </section>
+    <section class="feature-section" aria-labelledby="features">
+      <h2 id="features">What USCE adds</h2>
+      <div class="feature-grid">
+        <article class="feature">
+          <h3>Use your phone as a microphone</h3>
+          <p>Join from your phone’s browser and sing alongside wired or USB microphones. The companion also lets you browse songs and control the game.</p>
+          <img src="./assets/feature-phone-mic.webp" alt="USCE player setup showing the phone microphone join address and the assigned singer" width="960" height="540" loading="lazy">
+        </article>
+        <article class="feature">
+          <h3>Sing with up to 24 players</h3>
+          <p>Share one or two screens. The layout adapts to the group, and players can choose which voice to sing in multipart songs.</p>
+          <img src="./assets/feature-group-singing.webp" alt="Two game screens showing colored singing lanes for a 24-player session" width="960" height="270" loading="lazy">
+        </article>
+        <article class="feature">
+          <h3>Keep the songs coming</h3>
+          <p>Continuous playback carries the group into the next song. Choose when results appear, repeat a playlist, or use lyrics-only mode with zero singers.</p>
+          <img src="./assets/feature-continuous.webp" alt="Continuous playback settings for repeating songs and choosing when results appear" width="960" height="540" loading="lazy">
+        </article>
+        <article class="feature">
+          <h3>Find songs in a changing library</h3>
+          <p>Combine filters, see how many songs match each suggestion, and save filter sets. The library updates as you add or remove song files.</p>
+          <img src="./assets/feature-library.webp" alt="Song selection with multiple filters and suggestions that show matching song counts" width="960" height="540" loading="lazy">
+        </article>
+      </div>
+      <div class="feature-performance">
+        <h3>Smoother video playback</h3>
+        <p>With FFmpeg, USCE decodes video on a background thread so the game can keep drawing lyrics, notes, and menus while the next video frames are prepared. <a href="https://github.com/UltraStar-CE/USCE/pull/303">Video decoding changes</a></p>
+      </div>
     </section>
     <section class="section-rule">
       <div class="rule-heading"><h2>About USCE</h2></div>
