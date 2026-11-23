@@ -28,10 +28,14 @@
   </header>
   <main id="main" class="container theme-browser">
     <header class="theme-intro">
-      <h1>Theme browser</h1>
-      <p>Browse the latest USCE screenshots across themes, game screens, and window sizes.</p>
+      <h1 id="gallery-title">Theme browser</h1>
+      <p id="gallery-description">Browse the latest USCE screenshots across themes, game screens, and window sizes.</p>
       <p><a href="https://github.com/UltraStar-CE/Themes/blob/main/ARTWORK-PROVENANCE.md">Theme credits and licensing</a></p>
     </header>
+    <nav class="theme-modes" aria-label="Gallery sections">
+      <a id="screens-link" href="./" aria-current="page">Screens</a>
+      <a id="skins-link" href="?gallery=skins">Skins</a>
+    </nav>
     <form id="theme-filters" class="theme-filters" aria-label="Theme filters">
       <label for="screen">Screen
         <select id="screen" name="screen"><option value="">All screens</option></select>

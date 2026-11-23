@@ -19,6 +19,15 @@
 .theme-intro p, .theme-results, .theme-card p, .theme-pagination span {
   color: var(--gallery-muted);
 }
+.theme-modes {
+  display: flex;
+  gap: 1rem;
+  margin-block-end: 1rem;
+}
+.theme-modes [aria-current="page"] {
+  color: var(--gallery-ink);
+  font-weight: 700;
+}
 .theme-filters {
   display: grid;
   grid-template-columns: minmax(11rem, 2fr) repeat(2, minmax(8rem, 1fr)) auto;
@@ -34,6 +43,12 @@
   gap: .3rem;
   color: var(--gallery-muted);
   font-size: .875rem;
+}
+.theme-filters label[hidden] {
+  display: none;
+}
+.theme-filters.skin-filters {
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 .theme-filters select, .theme-browser button {
   min-height: 2.65rem;

@@ -1,7 +1,8 @@
 'use strict';
 
-const { screens } = window.USCE_THEME_GALLERY;
-const screenshots = window.USCE_THEME_GALLERY.screenshots.filter(row => row.language === 'English');
+const { screens, screenshots, skins = [] } = window.USCE_THEME_GALLERY;
+const showSkins = new URLSearchParams(location.search).get('gallery') === 'skins';
+const entries = (showSkins ? skins : screenshots).filter(row => row.language === 'English');
 const filters = document.querySelector('#theme-filters');
 const gallery = document.querySelector('#theme-gallery');
 const results = document.querySelector('#theme-results');
@@ -32,12 +33,24 @@ function appendOptions(key, values, display = value => value) {
 }
 
 function distinct(key) {
-  return [...new Set(screenshots.map(row => row[key]))].sort((a, b) => a.localeCompare(b));
+  return [...new Set(entries.map(row => row[key]))].sort((a, b) => a.localeCompare(b));
 }
 
-appendOptions('screen', Object.keys(screens), screen => screens[screen]);
+if (showSkins) {
+  document.querySelector('#gallery-title').textContent = 'Skins';
+  document.querySelector('#gallery-description').textContent = 'The main menu in every theme and skin.';
+  document.querySelector('#screens-link').removeAttribute('aria-current');
+  document.querySelector('#skins-link').setAttribute('aria-current', 'page');
+  filters.classList.add('skin-filters');
+  controls.screen.closest('label').hidden = true;
+  controls.resolution.closest('label').hidden = true;
+  delete controls.screen;
+  delete controls.resolution;
+} else {
+  appendOptions('screen', Object.keys(screens), screen => screens[screen]);
+  appendOptions('resolution', distinct('resolution'), resolutionName);
+}
 appendOptions('theme', distinct('theme'), themeName);
-appendOptions('resolution', distinct('resolution'), resolutionName);
 
 function setFilters(searchParams) {
   for (const [name, control] of Object.entries(controls)) {
@@ -51,6 +64,10 @@ function setAddress() {
   const url = new URL(location.href);
   url.searchParams.delete('language');
   url.searchParams.delete('view');
+  if (showSkins) {
+    url.searchParams.delete('screen');
+    url.searchParams.delete('resolution');
+  }
   for (const [name, control] of Object.entries(controls)) {
     if (control.value === defaults[name]) url.searchParams.delete(name);
     else url.searchParams.set(name, control.value);
@@ -69,7 +86,7 @@ function element(tag, content, className) {
 
 function picture(row) {
   const frame = row.latest;
-  const descriptor = themeName(row.theme) + ' · ' + screens[row.screen];
+  const descriptor = themeName(row.theme) + ' · ' + row.latest.skin + ' · ' + screens[row.screen];
   const figure = element('figure');
   const link = element('a');
   link.href = frame.src;
@@ -90,15 +107,15 @@ function card(row) {
   const article = element('article', '', 'theme-card');
   article.append(
     picture(row),
-    element('h2', themeName(row.theme)),
-    element('p', screens[row.screen] + ' · ' + row.latest.skin),
-    element('p', resolutionName(row.resolution)),
+    element('h2', showSkins ? row.latest.skin : themeName(row.theme)),
+    element('p', showSkins ? themeName(row.theme) : screens[row.screen] + ' · ' + row.latest.skin),
   );
+  if (!showSkins) article.append(element('p', resolutionName(row.resolution)));
   return article;
 }
 
 function display() {
-  const matches = screenshots.filter(row => Object.entries(controls).every(([key, control]) => {
+  const matches = entries.filter(row => Object.entries(controls).every(([key, control]) => {
     return !control.value || row[key] === control.value;
   }));
   const last = Math.max(1, Math.ceil(matches.length / pageSize));
