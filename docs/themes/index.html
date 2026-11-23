@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Browse UltraStar Community Edition themes and compare how they look across screens and window sizes.">
+  <meta name="description" content="Browse the latest UltraStar Community Edition theme screenshots across screens and window sizes.">
   <meta name="theme-color" content="#0d1422">
   <title>Themes · UltraStar Community Edition</title>
   <link rel="icon" href="../assets/usce-mark.png" type="image/png">
@@ -29,7 +29,8 @@
   <main id="main" class="container theme-browser">
     <header class="theme-intro">
       <h1>Theme browser</h1>
-      <p>Compare how USCE looks across themes, game screens, and window sizes.</p>
+      <p>Browse the latest USCE screenshots across themes, game screens, and window sizes.</p>
+      <p><a href="https://github.com/UltraStar-CE/Themes/blob/main/ARTWORK-PROVENANCE.md">Theme credits and licensing</a></p>
     </header>
     <form id="theme-filters" class="theme-filters" aria-label="Theme filters">
       <label for="screen">Screen
@@ -38,22 +39,12 @@
       <label for="theme">Theme
         <select id="theme" name="theme"><option value="">All themes</option></select>
       </label>
-      <label for="language">Language
-        <select id="language" name="language"><option value="">All languages</option></select>
-      </label>
       <label for="resolution">Resolution
         <select id="resolution" name="resolution"><option value="">All resolutions</option></select>
       </label>
-      <label for="view">View
-        <select id="view" name="view">
-          <option value="latest">Latest</option>
-          <option value="compare">Before and after</option>
-          <option value="earlier">Before</option>
-        </select>
-      </label>
       <button type="reset">Reset filters</button>
     </form>
-    <noscript><p>Enable JavaScript to filter and compare the screenshots.</p></noscript>
+    <noscript><p>Enable JavaScript to browse the screenshots.</p></noscript>
     <p class="theme-results" id="theme-results" aria-live="polite"></p>
     <section id="theme-gallery" class="theme-grid" aria-label="Theme screenshots"></section>
     <nav class="theme-pagination" id="theme-pagination" aria-label="Gallery pages" hidden>

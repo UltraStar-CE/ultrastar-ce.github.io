@@ -1,6 +1,7 @@
 'use strict';
 
-const { screens, screenshots } = window.USCE_THEME_GALLERY;
+const { screens } = window.USCE_THEME_GALLERY;
+const screenshots = window.USCE_THEME_GALLERY.screenshots.filter(row => row.language === 'English');
 const filters = document.querySelector('#theme-filters');
 const gallery = document.querySelector('#theme-gallery');
 const results = document.querySelector('#theme-results');
@@ -11,7 +12,7 @@ const next = document.querySelector('#next-page');
 const controls = Object.fromEntries(
   [...filters.querySelectorAll('select')].map(control => [control.name, control]),
 );
-const defaults = { screen: 'main', theme: '', language: 'English', resolution: '1280x720', view: 'latest' };
+const defaults = { screen: 'main', theme: '', resolution: '1280x720' };
 const shortThemeNames = { WorldPartyArgon: 'WorldParty Argon', WorldPartyNeon: 'WorldParty Neon' };
 const pageSize = 24;
 let page = 1;
@@ -36,7 +37,6 @@ function distinct(key) {
 
 appendOptions('screen', Object.keys(screens), screen => screens[screen]);
 appendOptions('theme', distinct('theme'), themeName);
-appendOptions('language', distinct('language'));
 appendOptions('resolution', distinct('resolution'), resolutionName);
 
 function setFilters(searchParams) {
@@ -49,6 +49,8 @@ function setFilters(searchParams) {
 
 function setAddress() {
   const url = new URL(location.href);
+  url.searchParams.delete('language');
+  url.searchParams.delete('view');
   for (const [name, control] of Object.entries(controls)) {
     if (control.value === defaults[name]) url.searchParams.delete(name);
     else url.searchParams.set(name, control.value);
@@ -65,8 +67,8 @@ function element(tag, content, className) {
   return node;
 }
 
-function picture(row, version, caption) {
-  const frame = row[version];
+function picture(row) {
+  const frame = row.latest;
   const descriptor = themeName(row.theme) + ' · ' + screens[row.screen];
   const figure = element('figure');
   const link = element('a');
@@ -81,45 +83,28 @@ function picture(row, version, caption) {
   image.decoding = 'async';
   link.append(image);
   figure.append(link);
-  if (caption) figure.append(element('figcaption', caption));
   return figure;
 }
 
-function card(row, mode) {
+function card(row) {
   const article = element('article', '', 'theme-card');
-  if (mode === 'compare') {
-    const pair = element('div', '', 'theme-images');
-    pair.append(picture(row, 'earlier', 'Before'), picture(row, 'latest', 'After'));
-    article.append(pair);
-  } else {
-    article.append(picture(row, mode));
-  }
-  const chosen = mode === 'earlier' ? row.earlier : row.latest;
-  const skin = mode === 'compare' && row.earlier.skin !== row.latest.skin
-    ? row.earlier.skin + ' → ' + row.latest.skin
-    : chosen.skin;
   article.append(
+    picture(row),
     element('h2', themeName(row.theme)),
-    element('p', screens[row.screen] + ' · ' + skin),
-    element('p', row.language + ' · ' + resolutionName(row.resolution)),
+    element('p', screens[row.screen] + ' · ' + row.latest.skin),
+    element('p', resolutionName(row.resolution)),
   );
   return article;
 }
 
 function display() {
-  const mode = controls.view.value;
-  const matches = screenshots.filter(row => {
-    const matchesFields = ['screen', 'theme', 'language', 'resolution'].every(key => {
-      const selected = controls[key].value;
-      return !selected || row[key] === selected;
-    });
-    return matchesFields && (mode === 'latest' || row.earlier);
-  });
+  const matches = screenshots.filter(row => Object.entries(controls).every(([key, control]) => {
+    return !control.value || row[key] === control.value;
+  }));
   const last = Math.max(1, Math.ceil(matches.length / pageSize));
   page = Math.min(page, last);
   const start = (page - 1) * pageSize;
-  gallery.classList.toggle('is-comparing', mode === 'compare');
-  gallery.replaceChildren(...matches.slice(start, start + pageSize).map(row => card(row, mode)));
+  gallery.replaceChildren(...matches.slice(start, start + pageSize).map(card));
   results.textContent = matches.length
     ? matches.length + (matches.length === 1 ? ' result' : ' results')
     : 'No screenshots match these filters.';
